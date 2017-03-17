@@ -8,10 +8,11 @@ namespace CardDeck
 {
 	class Deck
 	{
-		private Card[] cards = new Card[52];
+		private const int deckSize = 52;
+		private Card[] cards = new Card[deckSize];
 
 		private int cardsDealt = 0;
-		private int deckSize = 51;  // 51 for 0 based indexing.
+		private int cardsArraySize;  // 51 for 0 based indexing.
 
 		public Deck()
 		{
@@ -26,6 +27,8 @@ namespace CardDeck
 					cards[index++] = new Card(suite, face);
 				}
 			}
+
+			cardsArraySize = cards.Count();
 		}
 
 		public void Shuffle()
@@ -33,7 +36,7 @@ namespace CardDeck
 			Random rnd = new Random();
 			Card tempCard;
 
-			for (int index = 0; index <= deckSize; index++)
+			for (int index = cardsDealt; index < deckSize; index++)
 			{
 				int switchIndex = rnd.Next(index, cards.Count());
 				tempCard = cards[switchIndex];
@@ -44,10 +47,10 @@ namespace CardDeck
 
 		public Card DealOneCard()
 		{
-			if (cardsDealt > deckSize)
+			if (cardsDealt > cardsArraySize)
 				return null;
 
-			return cards[deckSize - cardsDealt++];
+			return cards[cardsDealt++];
 		}
 	}
 }
